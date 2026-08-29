@@ -1,0 +1,53 @@
+risk_levels:
+  low:
+    score: 1
+    description: Read-only inspection and low-impact analysis.
+  medium:
+    score: 2
+    description: Code generation, tests, branch/PR simulation.
+  high:
+    score: 3
+    description: CI workflow changes, dependency additions, infrastructure edits.
+  critical:
+    score: 4
+    description: Credential access, production data changes, security bypass.
+
+keyword_rules:
+  - risk: critical
+    patterns:
+      - disable security
+      - bypass approval
+      - dump environment
+      - reveal secrets
+      - production database
+      - drop table
+      - execute arbitrary shell
+      - ignore previous instructions
+  - risk: high
+    patterns:
+      - modify ci
+      - github actions
+      - add dependency
+      - infrastructure
+      - terraform
+      - kubernetes
+      - secrets manager
+      - production credentials
+  - risk: medium
+    patterns:
+      - create branch
+      - pull request
+      - generate code
+      - run tests
+      - implement endpoint
+      - add endpoint
+      - refactor
+  - risk: low
+    patterns:
+      - read
+      - inspect
+      - analyze
+      - document
+      - health
+
+default_risk: medium

@@ -1,0 +1,9 @@
+# Replace placeholder team handles with your GitHub org teams.
+# Organizations should map these to real CODEOWNERS groups.
+
+* @platform-engineering
+
+/app/security/ @security-engineering
+/config/ @platform-engineering @security-engineering
+/.github/ @platform-engineering @security-engineering
+/docs/security-model.md @security-engineering

@@ -1,0 +1,30 @@
+tools:
+  file_reader:
+    enabled: true
+    risk: low
+    description: Read repository source files for planning context.
+
+  code_analyzer:
+    enabled: true
+    risk: low
+    description: Static analysis of proposed changes and existing routes.
+
+  test_runner:
+    enabled: true
+    risk: medium
+    description: Execute simulated test suites for proposed changes.
+
+  git_simulator:
+    enabled: true
+    risk: medium
+    description: Simulate branch creation and pull request opening.
+
+  shell:
+    enabled: false
+    risk: critical
+    description: Arbitrary shell execution — disabled by default.
+
+  production_database:
+    enabled: false
+    risk: critical
+    description: Direct production database access — disabled by default.

@@ -1,0 +1,16 @@
+providers:
+  mock:
+    enabled: true
+    description: Deterministic local provider; no network required.
+  openai:
+    enabled: true
+    model_env: OPENAI_MODEL
+    default_model: gpt-4o-mini
+    api_key_env: OPENAI_API_KEY
+  anthropic:
+    enabled: true
+    model_env: ANTHROPIC_MODEL
+    default_model: claude-3-5-haiku-latest
+    api_key_env: ANTHROPIC_API_KEY
+
+default_provider: mock

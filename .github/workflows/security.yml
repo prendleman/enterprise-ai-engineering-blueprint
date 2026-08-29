@@ -1,0 +1,67 @@
+name: Security
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  schedule:
+    - cron: "0 9 * * 1"
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Bandit static analysis
+        run: python -m bandit -r app -ll
+
+      - name: pip-audit dependency scan
+        run: python -m pip_audit
+
+      - name: Secret pattern scan (heuristic)
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          patterns = [
+              re.compile(r"sk-[A-Za-z0-9]{20,}"),
+              re.compile(r"ghp_[A-Za-z0-9]{20,}"),
+              re.compile(r"AKIA[0-9A-Z]{16}"),
+          ]
+          allow = {".env.example"}
+          findings = []
+          for path in Path(".").rglob("*"):
+              if path.is_dir() or any(part.startswith(".") and part not in {".github"} for part in path.parts):
+                  if ".github" not in path.parts and any(p.startswith(".") for p in path.parts):
+                      continue
+              if path.suffix.lower() not in {".py", ".md", ".yml", ".yaml", ".toml", ".txt", ".env"} and path.name not in allow:
+                  continue
+              if "htmlcov" in path.parts or ".venv" in path.parts:
+                  continue
+              try:
+                  text = path.read_text(encoding="utf-8", errors="ignore")
+              except OSError:
+                  continue
+              for pattern in patterns:
+                  if pattern.search(text):
+                      findings.append(f"{path}: matched {pattern.pattern}")
+          if findings:
+              print("Potential secrets found:")
+              print("\n".join(findings))
+              sys.exit(1)
+          print("No high-confidence secret patterns found.")
+          PY

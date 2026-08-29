@@ -1,0 +1,44 @@
+approval_rules:
+  low:
+    approval_required: false
+    execution_allowed: true
+  medium:
+    approval_required: false
+    execution_allowed: true
+  high:
+    approval_required: true
+    execution_allowed: true
+  critical:
+    approval_required: true
+    execution_allowed: false
+
+policy_rules:
+  - id: block_disabled_tools
+    description: Agents may only invoke tools that are enabled in the tool registry.
+    severity: critical
+    action: block
+
+  - id: block_critical_execution
+    description: Critical-risk actions cannot execute even with approval in this blueprint.
+    severity: critical
+    action: block
+
+  - id: require_high_risk_approval
+    description: High-risk tasks pause until a human grants approval.
+    severity: high
+    action: require_approval
+
+  - id: block_prompt_injection
+    description: Suspicious prompts that attempt to bypass controls are rejected.
+    severity: critical
+    action: block
+
+  - id: redact_secrets
+    description: Secrets must never appear in logs or telemetry payloads.
+    severity: high
+    action: sanitize
+
+ai_usage:
+  require_task_audit: true
+  allow_unattended_critical: false
+  max_tools_per_task: 8

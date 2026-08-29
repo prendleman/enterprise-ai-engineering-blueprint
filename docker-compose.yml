@@ -1,0 +1,27 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      AI_PROVIDER: mock
+      TELEMETRY_DB_PATH: /app/data/telemetry.db
+      CONFIG_DIR: /app/config
+      LOG_LEVEL: INFO
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config:ro
+
+  dashboard:
+    build: .
+    command: streamlit run dashboard/app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    environment:
+      TELEMETRY_DB_PATH: /app/data/telemetry.db
+      API_BASE_URL: http://api:8000
+    volumes:
+      - ./data:/app/data
+      - ./dashboard:/app/dashboard:ro
+    depends_on:
+      - api
