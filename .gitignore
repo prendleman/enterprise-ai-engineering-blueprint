@@ -34,7 +34,8 @@ Thumbs.db
 
 # Local runtime / secrets
 .env
-.env.local
+.env.*
+!.env.example
 *.db
 *.sqlite
 *.sqlite3

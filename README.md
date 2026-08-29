@@ -57,7 +57,7 @@ Most “AI coding demos” stop at generation. Enterprises need a pattern for **
 Requirements: Python 3.12+
 
 ```bash
-git clone <your-fork-url> enterprise-ai-engineering-blueprint
+git clone https://github.com/prendleman/enterprise-ai-engineering-blueprint.git
 cd enterprise-ai-engineering-blueprint
 make setup
 make demo
@@ -221,10 +221,13 @@ tests/         # pytest suite
 
 ## Limitations
 
-- GitHub operations are simulated unless you integrate real credentials/apps
-- Productivity metrics are labeled simulated estimates
-- Prompt injection defenses are basic heuristics
-- No cloud IAM, vault, or enterprise SIEM integration
+- GitHub operations are simulated unless integrated with real credentials/apps
+- Productivity metrics are simulated estimates (not experimentally validated ROI)
+- Prompt-injection defenses are basic heuristics
+- This is not a production security boundary
+- No production IAM, vault, or SIEM is implemented
+
+See also `BUILD_REPORT.md` for validation results and resume-safe project claims.
 
 ---
 

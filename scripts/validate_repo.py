@@ -11,7 +11,6 @@ ROOT = Path(__file__).resolve().parent.parent
 
 REQUIRED_PATHS = [
     "README.md",
-    "BUILD_SPEC.md",
     "BUILD_REPORT.md",
     "LICENSE",
     "pyproject.toml",
