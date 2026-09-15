@@ -1,0 +1,19 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      AI_PROVIDER: mock
+      DATABASE_PATH: /app/data/telemetry.duckdb
+    volumes:
+      - ./data:/app/data
+  dashboard:
+    build: .
+    command: streamlit run dashboard/streamlit_app.py --server.port=8501 --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
+    environment:
+      API_BASE: http://api:8000
+    depends_on:
+      - api

@@ -1,0 +1,4 @@
+* @prendleman
+*.py @prendleman
+.github/ @prendleman
+docs/ @prendleman
