@@ -1,4 +1,6 @@
 # Enterprise AI Engineering Blueprint
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 
 Enterprise AI Engineering Blueprint is a reference implementation for introducing agentic AI into software engineering without sacrificing governance, security, developer experience, or measurable business outcomes.
 
